@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from "axios";
-import TokenHelper from "../helpers/TokenHelper";
-import IRegister from "./interfaces/IRegister";
+import PayloadHelper from "../helpers/PayloadHelper";
+import ILogin from "./interfaces/request/ILogin";
+import IRegister from "./interfaces/request/IRegister";
 
 export default class Api {
   api_token: string;
@@ -14,7 +15,10 @@ export default class Api {
   }
 
   init = () => {
-    this.api_token = new TokenHelper().GetTokenCookie();
+    let payloadHelper = new PayloadHelper();
+    if (payloadHelper.PayloadCookieExists()) {
+      this.api_token = payloadHelper.GetPayloadCookie().Token;
+    }
     let headers = {
       Accept: "application/json",
       Authorization: "",
@@ -35,5 +39,9 @@ export default class Api {
 
   registerUser = (data: IRegister) => {
     return this.init().post("/auth/register", data);
+  };
+
+  authUser = (data: ILogin) => {
+    return this.init().post("/auth/authenticate", data);
   };
 }

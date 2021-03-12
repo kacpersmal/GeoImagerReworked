@@ -1,0 +1,6 @@
+export default interface IRegister {
+  Username: string;
+  Email: string;
+  Password: string;
+  PasswordConfirm: string;
+}

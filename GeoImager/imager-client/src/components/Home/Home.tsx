@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Row, Col, Container } from "react-bootstrap";
 import MainForm from "../MainForm/MainForm";
 import "./Home.css";
+
 type MyProps = {};
 type MyState = {
   backgroundUrl: string;

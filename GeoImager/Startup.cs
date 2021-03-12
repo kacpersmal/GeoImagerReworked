@@ -1,8 +1,13 @@
+using GeoImager.Data;
+using GeoImager.Helpers;
+using GeoImager.Services.Implementations;
+using GeoImager.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,8 +28,10 @@ namespace GeoImager
         {
 
             services.AddControllersWithViews();
-
+            services.AddDbContext<ApplicationDbContext>(
+        options => options.UseSqlServer("Server=DESKTOP-1OJN617;Database=GeoImager;Trusted_Connection=True;"));
             // In production, the React files will be served from this directory
+            services.AddTransient<IAuthService, AuthService>();
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "imager-client/build";
@@ -34,7 +41,7 @@ namespace GeoImager
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UsePathBase(new PathString("/api"));
+            //app.UsePathBase(new PathString("/api"));
 
             if (env.IsDevelopment())
             {
@@ -52,6 +59,9 @@ namespace GeoImager
             app.UseSpaStaticFiles();
 
             app.UseRouting();
+            app.UseAuthorization();
+
+            app.UseMiddleware<JwtMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

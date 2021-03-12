@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import TokenHelper from "../helpers/TokenHelper";
+import IRegister from "./interfaces/IRegister";
 
 export default class Api {
   api_token: string;
@@ -19,7 +20,7 @@ export default class Api {
       Authorization: "",
     };
 
-    if (this.api_token) {
+    if (this.api_token.length > 0) {
       headers.Authorization = `Bearer ${this.api_token}`;
     }
 
@@ -30,5 +31,9 @@ export default class Api {
     });
 
     return this.client;
+  };
+
+  registerUser = (data: IRegister) => {
+    return this.init().post("/auth/register", data);
   };
 }

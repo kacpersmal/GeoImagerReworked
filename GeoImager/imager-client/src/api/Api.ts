@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import PayloadHelper from "../helpers/PayloadHelper";
+import IGetProfileRequest from "./interfaces/request/IGetProfileRequest";
 import ILogin from "./interfaces/request/ILogin";
 import IRegister from "./interfaces/request/IRegister";
 
@@ -17,14 +18,13 @@ export default class Api {
   init = () => {
     let payloadHelper = new PayloadHelper();
     if (payloadHelper.PayloadCookieExists()) {
-      this.api_token = payloadHelper.GetPayloadCookie().Token;
+      this.api_token = payloadHelper.GetPayloadCookie().token;
     }
     let headers = {
       Accept: "application/json",
       Authorization: "",
     };
-
-    if (this.api_token.length > 0) {
+    if (this.api_token.length > 0 && this.api_token) {
       headers.Authorization = `Bearer ${this.api_token}`;
     }
 
@@ -43,5 +43,9 @@ export default class Api {
 
   authUser = (data: ILogin) => {
     return this.init().post("/auth/authenticate", data);
+  };
+
+  getUserProfile = (data: IGetProfileRequest) => {
+    return this.init().get("/profile/" + data.Username);
   };
 }

@@ -47,11 +47,12 @@ namespace GeoImager.Services.Implementations
             {
                 return result;
             }
+            var userModel = new UserModel { CreationDate = DateTime.UtcNow, Email = request.Email, Username = request.Username,  Password = HashPassword(request.Password), Name = request.Name, Surname = request.Surname};
+            var profileModel = new ProfileModel { Description = "", IsPrivate = false, User = userModel };
 
-            var model = new UserModel { CreationDate = DateTime.UtcNow, Email = request.Email, Username = request.Username,  Password = HashPassword(request.Password)};
-
-            _context.Users.Add(model);
-            _context.SaveChanges();
+            await _context.Users.AddAsync(userModel);
+            await _context.UserProfiles.AddAsync(profileModel);
+            await _context.SaveChangesAsync();
             result.Succes = true;
 
             return result;

@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from "./components/Home/Home";
+import MainProfile from "./components/Profile/MainProfile";
 import PayloadHelper from "./helpers/PayloadHelper";
 import ProtectedRoute, { ProtectedRouteProps } from "./helpers/ProtectedRoute";
 
@@ -23,7 +24,7 @@ function AppRouter() {
 
   return (
     <Router>
-      <div>
+      <div className="bg-light">
         <Route path="/" exact component={Home} />
         <ProtectedRoute
           {...defaultProtectedRouteProps}
@@ -31,6 +32,7 @@ function AppRouter() {
           path="/test"
           component={testAuth}
         />
+        <Route path="/profile/:username" component={MainProfile} />
       </div>
     </Router>
   );

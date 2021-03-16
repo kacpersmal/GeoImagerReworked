@@ -16,6 +16,10 @@ const RegisterForm = () => {
   const [passwordConfirmError, setPasswordConfirmError] = useState("");
   const [createSucces, setCreateSucces] = useState(false);
   const [createFailMessage, setcreateFailMessage] = useState("");
+  const [name, setName] = useState("");
+  const [nameError, setNameError] = useState("");
+  const [surname, setSurname] = useState("");
+  const [surnameError, setSurnameError] = useState("");
 
   const submit = () => {
     const api = new Api();
@@ -26,6 +30,8 @@ const RegisterForm = () => {
       Email: email,
       PasswordConfirm: passwordConfirm,
       Username: username,
+      Name: name,
+      Surname: surname,
     };
 
     if (!validator.isLength(password, { min: 7, max: 50 })) {
@@ -42,6 +48,14 @@ const RegisterForm = () => {
     ) {
       validated = false;
       setUsernameError("This is invalid username");
+    }
+    if (validator.isEmpty(name)) {
+      validated = false;
+      setNameError("This is invalid name");
+    }
+    if (validator.isEmpty(surname)) {
+      validated = false;
+      setSurnameError("This is invalid surname");
     }
     if (!validator.matches(password, passwordConfirm)) {
       validated = false;
@@ -61,6 +75,30 @@ const RegisterForm = () => {
     <div>
       <Card.Body>
         <Form>
+          <Form.Group>
+            <Form.Control
+              onChange={(e) => {
+                setName(e.target.value.replace(/\s/g, ""));
+              }}
+              type="text"
+              placeholder="Name"
+            />
+            <Form.Text className="text-muted ">
+              <p className="text-danger">{nameError}</p>
+            </Form.Text>
+          </Form.Group>
+          <Form.Group>
+            <Form.Control
+              onChange={(e) => {
+                setSurname(e.target.value.replace(/\s/g, ""));
+              }}
+              type="text"
+              placeholder="Surname"
+            />
+            <Form.Text className="text-muted ">
+              <p className="text-danger">{surnameError}</p>
+            </Form.Text>
+          </Form.Group>
           <Form.Group>
             <Form.Control
               onChange={(e) => {

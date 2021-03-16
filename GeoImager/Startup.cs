@@ -26,12 +26,14 @@ namespace GeoImager
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(MapperConfig));
 
             services.AddControllersWithViews();
             services.AddDbContext<ApplicationDbContext>(
         options => options.UseSqlServer("Server=DESKTOP-1OJN617;Database=GeoImager;Trusted_Connection=True;"));
             // In production, the React files will be served from this directory
             services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IProfileService, ProfileService>();
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "imager-client/build";

@@ -1,0 +1,16 @@
+.profile-banner {
+  height: 18vh;
+  margin-top: 30px;
+}
+
+.profile-image {
+  height: 14vh;
+  width: 14vh;
+  background: transparent;
+  float: right;
+}
+
+.main-profile {
+  width: 18rem;
+  height: 12vh;
+}

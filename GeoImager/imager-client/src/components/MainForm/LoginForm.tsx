@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Card, Form } from "react-bootstrap";
+import { Redirect } from "react-router";
 import Api from "../../api/Api";
 import ILogin from "../../api/interfaces/request/ILogin";
 import ILoginResponse from "../../api/interfaces/response/ILoginResponse";
@@ -10,6 +11,8 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
+  const [loginSucces, setLoginSucces] = useState(false);
+  const [username, setUsername] = useState("");
 
   const submit = () => {
     const api = new Api();
@@ -25,14 +28,17 @@ const LoginForm = () => {
 
       if (dt.authenticated && dt.payload !== undefined) {
         payloadHelper.CreatePayloadCookie(dt.payload);
+        setUsername(dt.payload.username);
+        setLoginSucces(true);
       } else {
-        setLoginError("Invalid username or password");
+        setLoginError("Invalid email or password");
       }
     });
   };
 
   return (
     <div>
+      {loginSucces && <Redirect to={"/profile/" + username} />}
       <Card.Body>
         <Form>
           <Form.Group>

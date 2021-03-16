@@ -2,7 +2,7 @@ export default interface IProfileResponse {
   id: number;
   username: string;
   description: string;
-  userProfileImage: string;
+  userProfileImagePath: string;
   name: string;
   surname: string;
 }

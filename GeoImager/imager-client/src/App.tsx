@@ -1,24 +1,17 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from "./components/Home/Home";
+import EditProfile from "./components/Profile/EditProfile";
 import MainProfile from "./components/Profile/MainProfile";
 import PayloadHelper from "./helpers/PayloadHelper";
 import ProtectedRoute, { ProtectedRouteProps } from "./helpers/ProtectedRoute";
-
-function testAuth() {
-  return (
-    <div>
-      <p>Test</p>
-    </div>
-  );
-}
 
 function AppRouter() {
   let payloadHelper = new PayloadHelper();
   const defaultProtectedRouteProps: ProtectedRouteProps = {
     isAuthenticated: payloadHelper.PayloadCookieExists(),
     authenticationPath: "/",
-    restrictedPath: "/test",
+    restrictedPath: "/settings/edit",
     isAllowed: true,
   };
 
@@ -29,9 +22,10 @@ function AppRouter() {
         <ProtectedRoute
           {...defaultProtectedRouteProps}
           exact={true}
-          path="/test"
-          component={testAuth}
+          path="/settings/edit"
+          component={EditProfile}
         />
+
         <Route path="/profile/:username" component={MainProfile} />
       </div>
     </Router>

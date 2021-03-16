@@ -1,5 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 import PayloadHelper from "../helpers/PayloadHelper";
+import IEditProfileDescriptionRequest from "./interfaces/request/IEditProfileDescriptionRequest";
+import IEditProfileImageRequest from "./interfaces/request/IEditProfileImageRequest";
 import IGetProfileRequest from "./interfaces/request/IGetProfileRequest";
 import ILogin from "./interfaces/request/ILogin";
 import IRegister from "./interfaces/request/IRegister";
@@ -15,7 +17,7 @@ export default class Api {
     this.api_url = "/api/";
   }
 
-  init = () => {
+  init = (contentType?: any) => {
     let payloadHelper = new PayloadHelper();
     if (payloadHelper.PayloadCookieExists()) {
       this.api_token = payloadHelper.GetPayloadCookie().token;
@@ -23,7 +25,11 @@ export default class Api {
     let headers = {
       Accept: "application/json",
       Authorization: "",
+      "Content-Type": "application/json;charset=UTF-8",
     };
+    if (contentType) {
+      headers["Content-Type"] = contentType;
+    }
     if (this.api_token.length > 0 && this.api_token) {
       headers.Authorization = `Bearer ${this.api_token}`;
     }
@@ -44,8 +50,14 @@ export default class Api {
   authUser = (data: ILogin) => {
     return this.init().post("/auth/authenticate", data);
   };
-
+  editProfileDescription = (data: IEditProfileDescriptionRequest) => {
+    return this.init().post("/profile/edit/description", data);
+  };
   getUserProfile = (data: IGetProfileRequest) => {
     return this.init().get("/profile/" + data.Username);
+  };
+  editUserProfileImage = (data: IEditProfileImageRequest) => {
+    let client = this.init("multipart/form-data");
+    return client.post("/profile/edit/image/", data.Data);
   };
 }

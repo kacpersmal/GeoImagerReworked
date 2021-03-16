@@ -11,6 +11,8 @@ namespace GeoImager.Data
     {
         public DbSet<UserModel> Users { get; set; }
         public DbSet<ProfileModel> UserProfiles { get; set; }
+        public DbSet<ImageModel> Images { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options)
         {
         }

@@ -16,7 +16,7 @@ namespace GeoImager.Data
                 .ForMember(x => x.Id, a => a.MapFrom(x => x.Id))
                 .ForMember(x => x.Description, a => a.MapFrom(x => x.Description))
                 .ForMember(x => x.Username, a => a.MapFrom(x => x.User.Username))
-                .ForMember(x => x.UserProfileImage, a => a.MapFrom(x => x.UserProfileImage))
+                .ForMember(x => x.UserProfileImagePath, a => a.MapFrom(x => x.UserProfileImage.RelPath))
                 .ForMember(x => x.Name, a => a.MapFrom(x => x.User.Name))
                 .ForMember(x => x.Surname, a => a.MapFrom(x => x.User.Surname));
 

@@ -34,6 +34,8 @@ namespace GeoImager
             // In production, the React files will be served from this directory
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IProfileService, ProfileService>();
+            services.AddTransient<IImageService, ImageService>();
+
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "imager-client/build";

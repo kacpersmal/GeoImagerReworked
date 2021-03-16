@@ -52,8 +52,12 @@ const Navigation = () => {
           <Button variant="outline-info">Search</Button>
           {signedIn && (
             <NavDropdown title={username} id="collasible-nav-dropdown">
-              <NavDropdown.Item href="">My Profile</NavDropdown.Item>
-              <NavDropdown.Item href="">Settings</NavDropdown.Item>
+              <NavDropdown.Item href={"/profile/" + username}>
+                My Profile
+              </NavDropdown.Item>
+              <NavDropdown.Item href="/settings/edit">
+                Settings
+              </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="">
                 <Button onClick={signOut} variant="outline-danger">

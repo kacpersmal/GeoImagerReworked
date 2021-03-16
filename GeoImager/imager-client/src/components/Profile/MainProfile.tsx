@@ -5,7 +5,7 @@ import IGetProfileRequest from "../../api/interfaces/request/IGetProfileRequest"
 import IProfileResponse from "../../api/interfaces/response/IProfileResponse";
 import "./MainProfile.css";
 import Image from "react-bootstrap/Image";
-import { Card, Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import Navigation from "../Navbar/Navigation";
 type RouteParams = { username: string };
 const MainProfile = ({ match }: RouteComponentProps<RouteParams>) => {
@@ -16,26 +16,21 @@ const MainProfile = ({ match }: RouteComponentProps<RouteParams>) => {
 
     api.getUserProfile(req).then((result) => {
       let data = result.data as IProfileResponse;
-      if (!data.userProfileImage) {
-        data.userProfileImage = "/images/profile-default.png";
-      }
       setProfile(data);
     });
   }, [match.params.username]);
 
-  if (profile === undefined) {
-    return <div>404</div>;
-  } else {
-    return (
-      <div>
-        <Navigation />
+  return (
+    <div>
+      <Navigation />
+      {profile && (
         <Container className="profile-banner ">
           <Container>
             <Row>
               <Col>
                 <Image
                   className="profile-image"
-                  src={profile.userProfileImage}
+                  src={profile.userProfileImagePath}
                   roundedCircle
                 />
               </Col>
@@ -51,9 +46,9 @@ const MainProfile = ({ match }: RouteComponentProps<RouteParams>) => {
             </Row>
           </Container>
         </Container>
-      </div>
-    );
-  }
+      )}
+    </div>
+  );
 };
 
 export default MainProfile;
